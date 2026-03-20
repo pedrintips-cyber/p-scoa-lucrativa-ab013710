@@ -14,6 +14,10 @@ const CTAButton = ({ text, className = "", variant = "default", href = "#oferta"
   const isExternal = href.startsWith("http");
 
   const handleClick = (e: React.MouseEvent) => {
+    // Facebook Pixel: track InitiateCheckout when clicking buy buttons
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("track", "InitiateCheckout");
+    }
     if (isInternal && !href.startsWith("#")) {
       e.preventDefault();
       navigate(href);
